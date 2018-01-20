@@ -4,6 +4,7 @@ class Config(object):
     """
 
     # Put any configurations here that are common across all environments.
+    JSON_ADD_STATUS = False
 
 class DevelopmentConfig(Config):
     """
