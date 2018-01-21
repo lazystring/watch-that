@@ -55,3 +55,4 @@ $ flask db upgrade
 ```bash
 flask run
 ```
+ha ha ha
