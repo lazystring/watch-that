@@ -45,10 +45,8 @@ In `python/instance/config.py`:
 ```python
 SQLALCHEMY_DATABASE_URI = 'mysql://username:password@localhost/watchthat_db'
 ```
-Run the following commands from the 'watch-that/python' directory to create the database and associated tables
+Run the following command from the `watch-that/python` directory to create the database and associated tables
 ```bash
-$ flask db init
-$ flask db migrate 
 $ flask db upgrade
 ```
 
