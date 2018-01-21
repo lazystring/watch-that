@@ -8,8 +8,9 @@ To get the development environment setup, make sure the `python3-dev`, `virtuale
 
 Start the virtual environment and grab the required dependencies:
 ```bash
-$ virtualenv -p python3
+$ virtualenv -p <path-to-python3-interpreter> env
 $ source env/bin/activate
+$ cd python
 $ pip install -r requirements.txt
 ```
 
@@ -43,6 +44,12 @@ $ touch instance/config.py
 In `python/instance/config.py`:
 ```python
 SQLALCHEMY_DATABASE_URI = 'mysql://username:password@localhost/watchthat_db'
+```
+Run the following commands from the 'watch-that/python' directory to create the database and associated tables
+```bash
+$ flask db init
+$ flask db migrate 
+$ flask db upgrade
 ```
 
 ## Running the app
