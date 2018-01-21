@@ -8,8 +8,9 @@ To get the development environment setup, make sure the `python3-dev`, `virtuale
 
 Start the virtual environment and grab the required dependencies:
 ```bash
-$ virtualenv -p python3
+$ virtualenv -p <path-to-python3-interpreter> env
 $ source env/bin/activate
+$ cd python
 $ pip install -r requirements.txt
 ```
 
