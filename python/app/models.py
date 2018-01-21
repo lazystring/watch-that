@@ -20,6 +20,7 @@ class User(db.Model):
 class Video(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
+    url = db.Column(db.String(120))
     suggester_username = db.Column(db.String(16))
     up_votes = db.Column(db.Integer)
     down_votes = db.Column(db.Integer)
