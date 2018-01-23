@@ -28,6 +28,7 @@ class TestingConfig(Config):
 
     Testing = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    PRESERVE_CONTEXT_ON_EXCEPTION = False
 
 app_config = {
     'development': DevelopmentConfig,

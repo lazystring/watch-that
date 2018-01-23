@@ -60,6 +60,7 @@ class AppTest(TestCase):
         responses = self.socketiotest.get_received()
         self.assertNotEqual(len(responses), 0)
 
+        self.assertEqual(responses[0]['name'], 'join_group_response')
         response = responses[0]['args'][0]
         self.assertNotIn('error', response)
 
@@ -72,8 +73,9 @@ class AppTest(TestCase):
         self.assertEqual(len(response_users), 1)
         self.assertEqual(len(response_videos), 1)
 
-        self.assertEqual(response_users[0].id, db_users[0].id)
-        self.assertEqual(response_videos[0].id, video.id)
+        self.assertEqual(response['id'], group.id)
+        self.assertEqual(response_users[0]['id'], db_users[0].id)
+        self.assertEqual(response_videos[0]['id'], video.id)
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 from flask import Blueprint
 from flask import request
+from flask import jsonify
 from flask_json import json_response
 from flask_socketio import emit, join_room, leave_room
 
@@ -36,12 +37,7 @@ def handle_join_group(data):
     db.session.add(user)
     db.session.commit()
 
-    videos = group.videos.all()
-    users = group.users.all()
-    response = {
-        'users': users,
-        'videos': videos
-    }
+    response = group.serialize()
 
     emit('join_group_response', response, room=group_id)
 
