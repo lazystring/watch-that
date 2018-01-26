@@ -36,8 +36,8 @@ class AppTest(TestCase):
         self.assertIsNotNone(group)
 
     def test_join_group(self):
-        username = 'test_username'
         groupname = 'test_groupname'
+        username = 'test_username'
 
         group = Group(name=groupname)
         db.session.add(group)
@@ -49,6 +49,7 @@ class AppTest(TestCase):
                       up_votes=1,
                       down_votes=0,
                       group_id=group.id)
+
         db.session.add(video)
         db.session.commit()
 
@@ -77,6 +78,37 @@ class AppTest(TestCase):
         self.assertEqual(response_users[0]['id'], db_users[0].id)
         self.assertEqual(response_videos[0]['id'], video.id)
 
+    def test_suggest_video(self):
+        groupname = 'test_groupname'
+        username = 'test_username'
+        title = 'test_title'
+        url = 'https://___.test-url.___'
+
+        group = Group(name=groupname)
+        db.session.add(group)
+        db.session.commit()
+
+        self.socketiotest.emit('join_group', {
+            'username': 'test_username',
+            'group_id': group.id
+        })
+
+        self.socketiotest.emit('suggest_video', {
+            'url': url,
+            'title': title,
+            'suggester_username': username,
+            'group_id': group.id
+        })
+
+        responses = self.socketiotest.get_received()
+        self.assertNotEqual(len(responses), 0)
+
+        self.assertEqual(responses[1]['name'], 'suggest_video_response')
+        response = responses[1]['args'][0]
+        self.assertNotIn('error', response)
+
+        video = db.session.query(Video).get(response['id'])
+        self.assertIsNotNone(video)
 
 if __name__ == '__main__':
     unittest.main()
