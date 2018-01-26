@@ -1,5 +1,7 @@
 # WatchThat
 
+![Definitely not an image of a cat][cat_image]
+
 ## Dev Environment Setup
 
 First, make sure to install `mysql`.
@@ -55,4 +57,6 @@ $ flask db upgrade
 ```bash
 flask run
 ```
-ha ha ha
+
+
+[cat_image]: http://thetubist.com/wp-content/uploads/2014/08/cat-on-youtube.jpg
