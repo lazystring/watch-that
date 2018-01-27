@@ -1,6 +1,5 @@
 from flask import Blueprint
 from flask import request
-from flask import jsonify
 from flask_json import json_response
 from flask_socketio import emit, join_room, leave_room
 
@@ -57,6 +56,24 @@ def handle_suggest_video(data):
     response = video.serialize()
 
     emit('suggest_video_response', response, room=data['group_id'])
+
+@socketio.on('pause_video')
+def handle_pause_video(data):
+    group_id = data['group_id']
+    group = db.session.query(Group).get(group_id)
+    if group is None:
+        handle_error(response_name='pause_video_response',
+                     error='Group does not exist')
+    emit('pause_video_response', {}, room=group_id)
+
+@socketio.on('play_video')
+def handle_play_video(data):
+    group_id = data['group_id']
+    group = db.session.query(Group).get(group_id)
+    if group is None:
+        handle_error(response_name='play_video_response',
+                     error='Group does not exist')
+    emit('play_video_response', {}, room=group_id)
 
 def handle_error(response_name, error):
     emit(response_name, {'error': error})

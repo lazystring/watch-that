@@ -105,10 +105,47 @@ class AppTest(TestCase):
 
         self.assertEqual(responses[1]['name'], 'suggest_video_response')
         response = responses[1]['args'][0]
-        self.assertNotIn('error', response)
 
         video = db.session.query(Video).get(response['id'])
         self.assertIsNotNone(video)
+
+    def test_pause_video(self):
+        group = Group(name='test_group')
+        db.session.add(group)
+        db.session.commit()
+
+        self.socketiotest.emit('join_group', {
+            'username': 'test_username',
+            'group_id': group.id
+        })
+
+        self.socketiotest.emit('pause_video', {
+            'group_id':group.id
+        })
+
+        responses = self.socketiotest.get_received()
+
+        self.assertNotEqual(len(responses), 0)
+        self.assertEqual(responses[1]['name'], 'pause_video_response')
+
+    def test_play_video(self):
+        group = Group(name='test_group')
+        db.session.add(group)
+        db.session.commit()
+
+        self.socketiotest.emit('join_group', {
+            'username': 'test_username',
+            'group_id': group.id
+        })
+
+        self.socketiotest.emit('play_video', {
+            'group_id':group.id
+        })
+
+        responses = self.socketiotest.get_received()
+
+        self.assertNotEqual(len(responses), 0)
+        self.assertEqual(responses[1]['name'], 'play_video_response')
 
 if __name__ == '__main__':
     unittest.main()
